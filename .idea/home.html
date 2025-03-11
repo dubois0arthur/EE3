@@ -1,72 +1,57 @@
-<?php
-include_once 'Controller/Greeter.php';
-
-$greeter = new Greeter();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CouBooks</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>MPPT Controller Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333;
+    }
+    .data-box {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .info {
+      background: #ddd;
+      padding: 15px;
+      border-radius: 8px;
+      width: 200px;
+      font-size: 1.2em;
+    }
+    .info span {
+      font-weight: bold;
+      color: #0275d8;
+    }
+  </style>
 </head>
-
 <body>
-<header>
-  <div id="Title">
-    <h1>CouBooks</h1>
+<div class="container">
+  <h1>MPPT Controller Monitor</h1>
+  <div class="data-box">
+    <div class="info">Battery Voltage: <span id="batteryVoltage">-- V</span></div>
+    <div class="info">Input Voltage: <span id="inputVoltage">-- V</span></div>
+    <div class="info">Input Current: <span id="inputCurrent">-- A</span></div>
   </div>
-  <nav id="Navigation">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="courses.html">Courses</a></li>
-      <li><a href="reservation.html">Reservation</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-</header>
-
-<main>
-  <div id="WelcomeInfo">
-    <section id="Welcome">
-      <h2>Welcome to CouBooks</h2>
-      <h3>Are you ready to study?</h3>
-      <p>When in need of blablabla.</p>
-
-    </section>
-    <section id="Info">
-      <h3>Opening hours:</h3>
-      <ul>
-        <li>Mon: 9am-11am</li>
-        <li>Tue: 9am-11am</li>
-        <li>Fri: 9am-11am</li>
-      </ul>
-      <h3>Feedback</h3>
-      <p>Wow this is a website! - Aristoteles</p>
-      <p>Omg! - Socrates</p>
-      <a href="feedback.html">Add feedback...</a>
-    </section>
+  <div class="data-box">
+    <div class="info">Output Voltage: <span id="outputVoltage">-- V</span></div>
+    <div class="info">Output Current: <span id="outputCurrent">-- A</span></div>
+    <div class="info">Temperature: <span id="temperature">-- °C</span></div>
   </div>
-  <div id="emailSection">
-    <h2>Returning User?</h2>
-    <p>Enter your email to check if you have an account.</p>
-    <input type="email" id="email" placeholder="Enter your email">
-    <button id="checkEmailBtn">Check Email</button>
-    <p id="responseMessage"></p>
-  </div>
-
-
-</main>
-
-<footer>
-  <p>&copy; 2025 CouBooks. All rights reserved.</p>
-  <a href="https://www.google.com">Privacy policy |</a>
-
-  <a href="https://www.google.com"> Terms of use</a>
-
-
-</footer>
+</div>
 </body>
 </html>
