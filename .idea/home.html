@@ -1,0 +1,72 @@
+<?php
+include_once 'Controller/Greeter.php';
+
+$greeter = new Greeter();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CouBooks</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+<header>
+  <div id="Title">
+    <h1>CouBooks</h1>
+  </div>
+  <nav id="Navigation">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="reservation.html">Reservation</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div id="WelcomeInfo">
+    <section id="Welcome">
+      <h2>Welcome to CouBooks</h2>
+      <h3>Are you ready to study?</h3>
+      <p>When in need of blablabla.</p>
+
+    </section>
+    <section id="Info">
+      <h3>Opening hours:</h3>
+      <ul>
+        <li>Mon: 9am-11am</li>
+        <li>Tue: 9am-11am</li>
+        <li>Fri: 9am-11am</li>
+      </ul>
+      <h3>Feedback</h3>
+      <p>Wow this is a website! - Aristoteles</p>
+      <p>Omg! - Socrates</p>
+      <a href="feedback.html">Add feedback...</a>
+    </section>
+  </div>
+  <div id="emailSection">
+    <h2>Returning User?</h2>
+    <p>Enter your email to check if you have an account.</p>
+    <input type="email" id="email" placeholder="Enter your email">
+    <button id="checkEmailBtn">Check Email</button>
+    <p id="responseMessage"></p>
+  </div>
+
+
+</main>
+
+<footer>
+  <p>&copy; 2025 CouBooks. All rights reserved.</p>
+  <a href="https://www.google.com">Privacy policy |</a>
+
+  <a href="https://www.google.com"> Terms of use</a>
+
+
+</footer>
+</body>
+</html>
