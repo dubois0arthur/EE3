@@ -2,7 +2,7 @@
 // Database connection settings
 $servername = "localhost";
 $username = "root";
-$password = "1057Hugoalonsob";
+$password = "";
 $dbname = "esp_data";
 
 // Connect to MySQL
