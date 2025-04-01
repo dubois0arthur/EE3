@@ -73,21 +73,17 @@
       color: #0275d8;
     }
     .footer {
-  text-align: center;
-  width: 100%;
-  padding: 20px;
-  font-size: 0.95em;
-  color: #555;
-  background: linear-gradient(to right, #e0e0e0, #f8f8f8);
-  border-top: 1px solid #ccc;
-  margin-top: 40px;
-  font-style: italic;
-  letter-spacing: 0.3px;
-}
-
-
-
-
+      text-align: center;
+      width: 100%;
+      padding: 20px;
+      font-size: 0.95em;
+      color: #555;
+      background: linear-gradient(to right, #e0e0e0, #f8f8f8);
+      border-top: 1px solid #ccc;
+      margin-top: 40px;
+      font-style: italic;
+      letter-spacing: 0.3px;
+    }
   </style>
 </head>
 <body>
@@ -125,37 +121,36 @@
       </div>
     </div>
   </div>
-<footer class="footer"></footer>
-🌻 © 2025 EE3 Project — Hugo, Davit, Yaoqing, Xin & Arthur · Version 1.0
-</footer>
+  <footer class="footer">
+    🌻 © 2025 EE3 Project — Hugo, Davit, Yaoqing, Xin & Arthur · Version 1.0
+  </footer>
 
-<script>
-  async function fetchData() {
-    try {
-      const response = await fetch('fetch.php');
-      const data = await response.json();
+  <script>
+    async function fetchData() {
+      try {
+        const response = await fetch('fetch.php');
+        const data = await response.json();
 
-      if (data.status === "error") {
-        console.error(data.message);
-        return;
+        if (data.status === "error") {
+          console.error(data.message);
+          return;
+        }
+
+        // Update the HTML elements with the fetched data
+        document.getElementById("batteryVoltage").innerText = data.batteryVoltage + " V";
+        document.getElementById("inputVoltage").innerText = data.inputVoltage + " V";
+        document.getElementById("inputCurrent").innerText = data.inputCurrent + " A";
+        document.getElementById("outputVoltage").innerText = data.outputVoltage + " V";
+        document.getElementById("outputCurrent").innerText = data.outputCurrent + " A";
+        document.getElementById("temperature").innerText = data.temperature + " °C";
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-
-      // Update the HTML elements with the fetched data
-      document.getElementById("batteryVoltage").innerText = data.batteryVoltage + " V";
-      document.getElementById("inputVoltage").innerText = data.inputVoltage + " V";
-      document.getElementById("inputCurrent").innerText = data.inputCurrent + " A";
-      document.getElementById("outputVoltage").innerText = data.outputVoltage + " V";
-      document.getElementById("outputCurrent").innerText = data.outputCurrent + " A";
-      document.getElementById("temperature").innerText = data.temperature + " °C";
-    } catch (error) {
-      console.error("Error fetching data:", error);
     }
-  }
 
-  // Fetch data every 5 seconds
-  setInterval(fetchData, 5000);
-  fetchData(); // Initial fetch
-</script>
+    // Fetch data every 5 seconds
+    setInterval(fetchData, 5000);
+    fetchData(); // Initial fetch
+  </script>
 </body>
-
 </html>
