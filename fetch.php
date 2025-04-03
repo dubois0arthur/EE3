@@ -1,4 +1,5 @@
 <?php
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -21,3 +22,21 @@ if ($result->num_rows > 0) {
 
 $conn->close();
 
+/*
+
+// Simulate random data for testing
+header('Content-Type: application/json');
+
+// Generate random values for testing
+$data = [
+    "batteryVoltage" => rand(10, 15) + rand(0, 99) / 100, // Random voltage between 10.00 and 15.99
+    "inputVoltage" => rand(20, 25) + rand(0, 99) / 100,   // Random voltage between 20.00 and 25.99
+    "inputCurrent" => rand(1, 10) + rand(0, 99) / 100,    // Random current between 1.00 and 10.99
+    "outputVoltage" => rand(10, 15) + rand(0, 99) / 100,  // Random voltage between 10.00 and 15.99
+    "outputCurrent" => rand(1, 10) + rand(0, 99) / 100,   // Random current between 1.00 and 10.99
+    "temperature" => rand(20, 40) + rand(0, 99) / 100     // Random temperature between 20.00 and 40.99
+];
+
+// Return the random data as JSON
+echo json_encode($data); */
+?>
