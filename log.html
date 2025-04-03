@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Sunflower Data Log</title>
+  <link rel="stylesheet" href="log.css" />
+</head>
+<body>
+
+  <div class="header">
+    <div class="button-container">
+        <a href="home.html" class="nav-button">← Back to Monitor</a>
+      </div>
+    <img src="https://i.imgur.com/pit9Rjj.jpg" alt="Project Sunflower Logo" class="logo">
+    
+      
+    <h1>ESP32 MPPT Controller Data Log</h1>
+  </div>
+
+  <div class="table-container">
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Battery Voltage (V)</th>
+          <th>Input Voltage (V)</th>
+          <th>Input Current (A)</th>
+          <th>Output Voltage (V)</th>
+          <th>Output Current (A)</th>
+          <th>Temperature (°C)</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <footer class="footer">
+    🌻 © 2025 EE3 Project — Hugo, Davit, Yaoqing, Xin & Arthur · Version 1.0
+  </footer>
+
+  <script>
+    async function loadData() {
+      try {
+        const response = await fetch('fetch_log.php'); // Create this PHP based on your last PHP block
+        const data = await response.json();
+        const tbody = document.querySelector("#dataTable tbody");
+        tbody.innerHTML = "";
+
+        data.forEach(row => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${row.batteryVoltage}</td>
+            <td>${row.inputVoltage}</td>
+            <td>${row.inputCurrent}</td>
+            <td>${row.outputVoltage}</td>
+            <td>${row.outputCurrent}</td>
+            <td>${row.temperature}</td>
+            <td>${row.created_at}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        console.error("Error loading data:", err);
+      }
+    }
+
+    loadData();
+    setInterval(loadData, 10000); // Update every 10s
+  </script>
+
+</body>
+</html>

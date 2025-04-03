@@ -50,9 +50,13 @@
       <div class="info">
         <div class="info-label">Temperature</div>
         <span id="temperature">-- °C</span>
-      </div>
+      
     </div>
   </div>
+  <a href="log.html" class="nav-button">Open Data Log</a>
+  </div>
+  </div>
+
 
   <footer class="footer">
     🌻 © 2025 EE3 Project — Hugo, Davit, Yaoqing, Xin & Arthur · Version 1.0
@@ -110,7 +114,7 @@ function updateBatteryBar(level) {
 
 
         // Check and apply low-battery state
-        if (batteryLevel < 90) {
+        if (batteryLevel < 30) {
           batteryContainer.classList.add('low-battery');
           header.classList.add('low-battery');
           batteryLabel.classList.add('info-label-lowpower');
