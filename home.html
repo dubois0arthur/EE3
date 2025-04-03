@@ -11,6 +11,12 @@
   <div class="header">
     <img src="https://i.imgur.com/pit9Rjj.jpg" alt="Project Sunflower Logo" class="logo">
     <h1>MPPT Controller Monitor</h1>
+    <div class="container">
+      <div class="info-label-power">
+        Battery Power <span id="batteryPercentage">--%</span>
+      </div>
+      <div class="battery-bar" id="batteryBar"></div>
+    </div>
   </div>
 
   <div class="container">
@@ -20,6 +26,10 @@
       <div class="info">
         <div class="info-label">Battery Voltage</div>
         <span id="batteryVoltage">-- V</span>
+      </div>
+      <div class="info">
+        <div class="info-label">Efficiency</div>
+        <span id="efficiency">-- %</span>
       </div>
       <div class="info">
         <div class="info-label">Input Voltage</div>
@@ -49,6 +59,22 @@
   </footer>
 
   <script>
+
+function updateBatteryBar(level) {
+      const batteryBar = document.getElementById("batteryBar");
+      batteryBar.innerHTML = ""; // clear previous
+
+      const totalSegments = 20;
+      const filledSegments = Math.round((level / 100) * totalSegments);
+
+      for (let i = 0; i < totalSegments; i++) {
+        const segment = document.createElement("div");
+        segment.classList.add("battery-segment");
+        if (i < filledSegments) segment.classList.add("filled");
+        batteryBar.appendChild(segment);
+      }
+    }
+
     async function fetchData() {
       try {
         const response = await fetch('fetch.php');
@@ -65,6 +91,42 @@
         document.getElementById("outputVoltage").innerText = data.outputVoltage + " V";
         document.getElementById("outputCurrent").innerText = data.outputCurrent + " A";
         document.getElementById("temperature").innerText = data.temperature + " °C";
+
+        // Efficiency calculation: Output Power / Input Power
+        const inputPower = data.inputVoltage * data.inputCurrent;
+        const outputPower = data.outputVoltage * data.outputCurrent;
+        const efficiency = inputPower > 0 ? ((outputPower / inputPower) * 100).toFixed(1) : 0;
+        document.getElementById("efficiency").innerText = efficiency + " %";
+
+        // Battery level estimation (assuming 12.0V = 0%, 12.6V = 100% as rough guide)
+        let batteryLevel = ((data.batteryVoltage - 11.8) / (13.0 - 11.8)) * 100;
+        batteryLevel = Math.max(0, Math.min(batteryLevel, 100));
+        document.getElementById("batteryPercentage").innerText = `${batteryLevel.toFixed(0)}%`;
+        updateBatteryBar(batteryLevel);
+
+        const batteryContainer = document.querySelector('.container');
+        const header = document.querySelector('.header');
+        const batteryLabel = document.querySelector('.info-label-power, .info-label-lowpower');
+
+
+        // Check and apply low-battery state
+        if (batteryLevel < 90) {
+          batteryContainer.classList.add('low-battery');
+          header.classList.add('low-battery');
+          batteryLabel.classList.add('info-label-lowpower');
+
+        } else {
+          batteryContainer.classList.remove('low-battery');
+          header.classList.remove('low-battery');
+          batteryLabel.classList.add('info-label-power');
+}
+
+
+        
+
+
+        
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }

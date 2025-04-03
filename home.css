@@ -47,6 +47,13 @@ body {
     color: #00FF00;
     font-weight: bold;
   }
+
+  .info-label-power {
+    color: #00FF00;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: larger;
+  }
   
   .info span {
     color: #00FF00;
@@ -75,5 +82,47 @@ body {
     50% {
       opacity: 0;
     }
+  }
+  
+  .battery-bar {
+    display: flex;
+    gap: 5px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    max-width: 800px; /* controls bar length */
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  
+  
+  .battery-segment {
+    width: 25px;
+    height: 35px;
+    background-color: #000000;
+    border: 1px solid #00FF00;
+  }
+  
+  .battery-segment.filled {
+    background-color: #00FF00;
+  }
+
+  .low-battery {
+    color: red !important;
+    border-color: red !important;
+  }
+  
+  .low-battery .battery-segment {
+    border-color: red;
+  }
+  
+  .low-battery .battery-segment.filled {
+    background-color: red;
+  }
+  
+  .info-label-lowpower {
+    color: red;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: larger;
   }
   
