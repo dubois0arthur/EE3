@@ -110,7 +110,7 @@ function updateBatteryBar(level) {
 
 
         // Check and apply low-battery state
-        if (batteryLevel < 90) {
+        if (batteryLevel < 30) {
           batteryContainer.classList.add('low-battery');
           header.classList.add('low-battery');
           batteryLabel.classList.add('info-label-lowpower');
@@ -119,14 +119,8 @@ function updateBatteryBar(level) {
           batteryContainer.classList.remove('low-battery');
           header.classList.remove('low-battery');
           batteryLabel.classList.add('info-label-power');
-}
+        }
 
-
-        
-
-
-        
-        
       } catch (error) {
         console.error("Error fetching data:", error);
       }
