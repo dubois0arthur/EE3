@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     exit;
 }
 
-$sql = "SELECT batteryVoltage, inputVoltage, inputCurrent, outputVoltage, outputCurrent, temperature, created_at FROM sensor_data ORDER BY created_at DESC LIMIT 100";
+$sql = "SELECT batteryVoltage, inputVoltage, inputCurrent, outputVoltage, outputCurrent, temperature, rotation, created_at FROM sensor_data ORDER BY created_at DESC LIMIT 100";
 $result = $conn->query($sql);
 
 $data = [];

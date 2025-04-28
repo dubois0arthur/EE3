@@ -28,6 +28,7 @@
           <th>Output Voltage (V)</th>
           <th>Output Current (A)</th>
           <th>Temperature (°C)</th>
+          <th>Rotation Status</th>
           <th>Timestamp</th>
         </tr>
       </thead>
@@ -49,6 +50,16 @@
 
         data.forEach(row => {
           const tr = document.createElement("tr");
+
+          let rotationStatus = "--";
+        if (row.rotation == 0) {
+          rotationStatus = "Stopped";
+        } else if (row.rotation == 1) {
+          rotationStatus = "Rotating Left";
+        } else if (row.rotation == 2) {
+          rotationStatus = "Rotating Right";
+        }
+
           tr.innerHTML = `
             <td>${row.batteryVoltage}</td>
             <td>${row.inputVoltage}</td>
@@ -56,6 +67,7 @@
             <td>${row.outputVoltage}</td>
             <td>${row.outputCurrent}</td>
             <td>${row.temperature}</td>
+            <td>${rotationStatus}</td>
             <td>${row.created_at}</td>
           `;
           tbody.appendChild(tr);

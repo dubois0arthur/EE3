@@ -67,85 +67,96 @@
 
   <script>
 
-function updateBatteryBar(level) {
-      const batteryBar = document.getElementById("batteryBar");
-      batteryBar.innerHTML = ""; // clear previous
-
-      const totalSegments = 20;
-      const filledSegments = Math.round((level / 100) * totalSegments);
-
-      for (let i = 0; i < totalSegments; i++) {
-        const segment = document.createElement("div");
-        segment.classList.add("battery-segment");
-        if (i < filledSegments) segment.classList.add("filled");
-        batteryBar.appendChild(segment);
-      }
+    function updateBatteryBar(level) {
+        const batteryBar = document.getElementById("batteryBar");
+        batteryBar.innerHTML = ""; // clear previous
+    
+        const totalSegments = 20;
+        const filledSegments = Math.round((level / 100) * totalSegments);
+    
+        let colorClass = "battery-green"; // default
+    
+        if (level <= 30) {
+            colorClass = "battery-red";
+        } else if (level <= 60) {
+            colorClass = "battery-yellow";
+        }
+    
+        for (let i = 0; i < totalSegments; i++) {
+            const segment = document.createElement("div");
+            segment.classList.add("battery-segment");
+            if (i < filledSegments) {
+                segment.classList.add("filled", colorClass);
+            }
+            batteryBar.appendChild(segment);
+        }
     }
-
+    
     async function fetchData() {
       try {
         const response = await fetch('fetch.php');
         const data = await response.json();
-
+    
         if (data.status === "error") {
           console.error(data.message);
           return;
         }
-
+    
         document.getElementById("batteryVoltage").innerText = data.batteryVoltage + " V";
         document.getElementById("inputVoltage").innerText = data.inputVoltage + " V";
         document.getElementById("inputCurrent").innerText = data.inputCurrent + " A";
         document.getElementById("outputVoltage").innerText = data.outputVoltage + " V";
         document.getElementById("outputCurrent").innerText = data.outputCurrent + " A";
         document.getElementById("temperature").innerText = data.temperature + " °C";
+    
+        let rotationStatus = "--";
+        if (data.rotation !== undefined && data.rotation !== null) {
+          const rotation = Number(data.rotation);  // 👈 convert to Number
+          if (rotation === 0) {
+            rotationStatus = "Stopped";
+          } else if (rotation === 1) {
+            rotationStatus = "Rotating Left";
+          } else if (rotation === 2) {
+            rotationStatus = "Rotating Right";
+          }
+        }
         document.getElementById("rotationStatus").innerText = rotationStatus;
-
-
-      //Rotation status
-      let rotationStatus = "--";
-      if (data.rotation === 0) {
-        rotationStatus = "Stopped";
-      } else if (data.rotation === 1) {
-        rotationStatus = "Rotating Left";
-      } else if (data.rotation === 2) {
-        rotationStatus = "Rotating Right";
-      }
-
-        // Efficiency calculation: Output Power / Input Power
+    
+        // Efficiency calculation
         const inputPower = data.inputVoltage * data.inputCurrent;
         const outputPower = data.outputVoltage * data.outputCurrent;
         const efficiency = inputPower > 0 ? ((outputPower / inputPower) * 100).toFixed(1) : 0;
         document.getElementById("efficiency").innerText = efficiency + " %";
-
-        // Battery level estimation (assuming 12.0V = 0%, 12.6V = 100% as rough guide)
+    
+        // Battery level estimation (assuming 12.0V = 0%, 13.0V = 100%)
         let batteryLevel = ((data.batteryVoltage - 11.8) / (13.0 - 11.8)) * 100;
         batteryLevel = Math.max(0, Math.min(batteryLevel, 100));
         document.getElementById("batteryPercentage").innerText = `${batteryLevel.toFixed(0)}%`;
         updateBatteryBar(batteryLevel);
-
+    
         const batteryContainer = document.querySelector('.container');
         const header = document.querySelector('.header');
         const batteryLabel = document.querySelector('.info-label-power, .info-label-lowpower');
-
+    
         // Check and apply low-battery state
         if (batteryLevel < 30) {
           batteryContainer.classList.add('low-battery');
           header.classList.add('low-battery');
           batteryLabel.classList.add('info-label-lowpower');
-
         } else {
           batteryContainer.classList.remove('low-battery');
           header.classList.remove('low-battery');
           batteryLabel.classList.add('info-label-power');
         }
-
+    
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     }
-
+    
     setInterval(fetchData, 5000);
     fetchData();
-  </script>
-</body>
+    
+    </script>
+    </body>
 </html>
