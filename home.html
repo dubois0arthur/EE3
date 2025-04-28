@@ -100,6 +100,8 @@ function updateBatteryBar(level) {
         document.getElementById("temperature").innerText = data.temperature + " °C";
         document.getElementById("rotationStatus").innerText = rotationStatus;
 
+
+      //Rotation status
       let rotationStatus = "--";
       if (data.rotation === 0) {
         rotationStatus = "Stopped";
@@ -108,8 +110,6 @@ function updateBatteryBar(level) {
       } else if (data.rotation === 2) {
         rotationStatus = "Rotating Right";
       }
-      
-
 
         // Efficiency calculation: Output Power / Input Power
         const inputPower = data.inputVoltage * data.inputCurrent;
