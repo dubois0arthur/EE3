@@ -22,7 +22,10 @@
   <div class="container">
     <div class="data-box">
       <div class="info-label">Status: Running<span class="cursor"></span></div>
-
+      <div class="info">
+        <div class="info-label">Rotation Status</div>
+        <span id="rotationStatus">--</span>
+      </div>
       <div class="info">
         <div class="info-label">Battery Voltage</div>
         <span id="batteryVoltage">-- V</span>
@@ -95,6 +98,18 @@ function updateBatteryBar(level) {
         document.getElementById("outputVoltage").innerText = data.outputVoltage + " V";
         document.getElementById("outputCurrent").innerText = data.outputCurrent + " A";
         document.getElementById("temperature").innerText = data.temperature + " °C";
+        document.getElementById("rotationStatus").innerText = rotationStatus;
+
+      let rotationStatus = "--";
+      if (data.rotation === 0) {
+        rotationStatus = "Stopped";
+      } else if (data.rotation === 1) {
+        rotationStatus = "Rotating Left";
+      } else if (data.rotation === 2) {
+        rotationStatus = "Rotating Right";
+      }
+      
+
 
         // Efficiency calculation: Output Power / Input Power
         const inputPower = data.inputVoltage * data.inputCurrent;
@@ -111,7 +126,6 @@ function updateBatteryBar(level) {
         const batteryContainer = document.querySelector('.container');
         const header = document.querySelector('.header');
         const batteryLabel = document.querySelector('.info-label-power, .info-label-lowpower');
-
 
         // Check and apply low-battery state
         if (batteryLevel < 30) {

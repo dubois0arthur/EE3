@@ -20,10 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $outputVoltage = $_POST['outputVoltage'] ?? null;
     $outputCurrent = $_POST['outputCurrent'] ?? null;
     $temperature = $_POST['temperature'] ?? null;
+    $rotation = $_POST['rotation'] ?? null;
+
 
     // Validate all fields are provided
     if ($batteryVoltage !== null && $inputVoltage !== null && $inputCurrent !== null && 
-        $outputVoltage !== null && $outputCurrent !== null && $temperature !== null) {
+        $outputVoltage !== null && $outputCurrent !== null && $temperature !== null && $rotation !== null) {
 
         // Sanitize inputs
         $batteryVoltage = filter_var($batteryVoltage, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -34,8 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $temperature = filter_var($temperature, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
         // Insert into database
-        $stmt = $conn->prepare("INSERT INTO sensor_data (batteryVoltage, inputVoltage, inputCurrent, outputVoltage, outputCurrent, temperature) VALUES (?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("dddddd", $batteryVoltage, $inputVoltage, $inputCurrent, $outputVoltage, $outputCurrent, $temperature);
+        $stmt = $conn->prepare("INSERT INTO sensor_data (batteryVoltage, inputVoltage, inputCurrent, outputVoltage, outputCurrent, temperature, rotation) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ddddddi", $batteryVoltage, $inputVoltage, $inputCurrent, $outputVoltage, $outputCurrent, $temperature, $rotation);
 
         if ($stmt->execute()) {
             $id = $stmt->insert_id;
@@ -48,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     "inputCurrent" => $inputCurrent,
                     "outputVoltage" => $outputVoltage,
                     "outputCurrent" => $outputCurrent,
-                    "temperature" => $temperature
+                    "temperature" => $temperature,
+                    "rotation" => $rotation
                 ]
             ]);
         } else {
